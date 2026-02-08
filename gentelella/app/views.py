@@ -312,6 +312,19 @@ def year_2025(request):
     #print("statename=",statename)
     datastore2 = get_con()
     print("year_2025")
+    
+    # Check if case data exists
+    if not datastore2.get('all_case_set'):
+        # Return empty analytics page
+        context = {
+            'total_case': 0,
+            'total_pending': 0,
+            'total_disposed': 0,
+            'message': 'No case data available for analytics'
+        }
+        template = loader.get_template('app/year_2025.html')
+        return HttpResponse(template.render(context, request))
+    
     context = {}
     all_case_type=[]
     all_case_type_count=[]
