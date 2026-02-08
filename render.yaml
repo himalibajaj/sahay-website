@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: sahay
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn gentelella.gentelella.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: GOOGLE_API_KEY
+        sync: false
+    
+  - type: redis
+    name: sahay-redis
+    plan: starter
+    ipAllowList: []

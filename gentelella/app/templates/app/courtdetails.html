@@ -1,0 +1,132 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+ 
+{% extends "app/base_site.html" %}
+
+{% block title %} Table Dynamic {% endblock title %}
+
+{% block stylesheets %}
+
+ {{ block.super }}
+ <link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+ <link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+ <link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+ <link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+ <link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+ {% endblock stylesheets %}
+
+ {% block content %}
+ {% load custom_tags %}
+{% with  receivedJson=receivedJsonString|jsonify  %}
+<div class="right_col" role="main">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Statewise Details</h3>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <br />
+              <form id="courtdetailsForm" data-parsley-validate class="form-horizontal form-label-left" method = "post" target="/courtdetails.html">
+                <div class="form-group item">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cluster" data-placement="right" data-toggle="tooltip" title="Cluster Name">Select State</label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select name="statename" id="statename" class="select2_single form-control" tabindex="-1" id="clusterList">
+                        <option value="" selected disabled >Select State</option>
+                        {% for cls in statelist %}
+                            {% if curstatename != cls %}
+                                  <option value="{{ cls }}">{{ cls }}</option>
+                            {% elif curstatename == cls %}
+                                  <option value="{{ cls }}" selected >{{ cls }}</option>
+                            {% endif %}
+                        {% endfor %}
+                        </select>
+                  </div>
+                </div>
+ 
+                              
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                    <button id="cnfSubmit" name="submit" value="Submit" class="btn btn-success">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <br /><br />
+            </div>
+  
+            <div class="x_title">
+              <h2>List Of Courts</h2>
+              <div class="clearfix"></div>
+            </div>
+  
+            <div class="x_content">
+	      <div class="clearfix"></div>
+	      <p id="releasedetails"></p>
+                <table id="reportsTable"   class="table table-striped jambo_table bulk_action">
+                    <thead  id="showOrNot1">
+                        <tr >
+                            <th style="width: 5%;">Sl-No</th>
+                            <th style="width: 15%;">State</th>
+                            <th style="width: 25%;">Court Name</th>
+                            <th style="width: 45%;">Address</th>
+			    <th style="width: 10%;">Contact No</th>
+
+
+
+                        </tr>
+                    </thead>
+		    <tbody id="relbody">
+                      {% for iterator in receivedJson.courtlist  %}
+                         <tr>
+                          <td id='slno' style="width: 5%;" >{{iterator.slno}}</td>
+                          <td id='state' style="width: 15%;" >{{curstatename}}</td>
+                          <td id='court_name' style="width: 25%;" >{{iterator.court_name}}</td>
+                          <td id='addr' style="width: 45%;" >{{iterator.addr}}</td>
+                          <td id='phoneno' style="width: 10%;" >{{iterator.phoneno}}</td>
+                        </tr>
+                     {% endfor %}
+	            </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endwith %}
+  {% endblock content %}
+
+  {% block javascripts %}
+   {{ block.super }}
+ <!-- Datatables -->
+
+ <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+ <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+ <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+ <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+ <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+ <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+ <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+ <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+ <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+ <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+ <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+ <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+ <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+ <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+ <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+   <script src="/static/vendors/echarts/dist/echarts.min.js"></script>
+ <script src="/static/vendors/echarts/map/js/world.js"></script>
+
+{% endblock javascripts %}

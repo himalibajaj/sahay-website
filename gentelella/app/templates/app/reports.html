@@ -1,0 +1,300 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+{% extends "app/base_site.html" %}
+
+{% block title %} General Elements {% endblock title %}
+
+{% block stylesheets %}
+  {{ block.super }}
+  <link href="/static/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+  <link href="/static/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+  <link href="/static/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+{% load custom_tags %}
+{% with  receivedJson=receivedJsonString|jsonify  %}
+{% with  receivedJson2=receivedJsonString2|jsonify  %}
+  <div class="right_col" role="main">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Grievance Summary</h3>
+        </div>
+
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      
+
+
+
+        <div class="clearfix"></div>
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2><i class="fa fa-bars"></i> Vertical Tabs <small>Float left</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+              <div class="col-xs-3">
+                <!-- required for floating -->
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tabs-left">
+                  <li class="active"><a href="#home" data-toggle="tab">Home</a>
+                  </li>
+                  <li><a href="#profile" data-toggle="tab">Profile</a>
+                  </li>
+                  <li><a href="#messages" data-toggle="tab">Messages</a>
+                  </li>
+                  <li><a href="#settings" data-toggle="tab">Settings</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="col-xs-9">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active" id="home">
+                    <p class="lead">Home tab</p>
+                    <p>{{companydetails}}</p>
+                  </div>
+                  <div class="tab-pane" id="profile">Profile Tab.{{companywebsite}}</div>
+                  <div class="tab-pane" id="messages">Messages Tab.{{grievancemail}}</div>
+                  <div class="tab-pane" id="settings">Settings Tab.{{ccc}}</div>
+                </div>
+              </div>
+
+              <div class="clearfix"></div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Suggested Message <small>for social media platform</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Settings 1</a>
+                  </li>
+                  <li><a href="#">Settings 2</a>
+                  </li>
+                </ul>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+
+            <div class="bs-example" data-example-id="simple-jumbotron">
+              <div class="jumbotron">
+                <h1>Tweet</h1>
+                <p>Sample Tweet Message{{grievancetweet}}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+        <div class="clearfix"></div>
+
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2><i class="fa fa-align-left"></i> Nearest Consumer Court details <small>As per Pincode</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+              <!-- start accordion -->
+              <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel">
+                  <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <h4 class="panel-title">Court Details</h4>
+                  </a>
+                  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            
+                            <th style="width: 5%;">Sl-No</th>
+                            <th style="width: 15%;">State</th>
+                            <th style="width: 25%;">Court Name</th>
+                            <th style="width: 45%;">Address</th>
+			    <th style="width: 10%;">Contact No</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for iterator in receivedJson.nearestcourtlist  %}
+                             <tr>
+                                 <td id='slno' style="width: 5%;" >{{iterator.slno}}</td>
+                                 <td id='state' style="width: 15%;" >{{curstatename}}</td>
+                                 <td id='court_name' style="width: 25%;" >{{iterator.court_name}}</td>
+                                 <td id='addr' style="width: 45%;" >{{iterator.addr}}</td>
+                                 <td id='phoneno' style="width: 10%;" >{{iterator.phoneno}}</td>
+                             </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- end of accordion -->
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2><i class="fa fa-align-left"></i> Consumer Courts in your state <small>{{curstatename}}</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+              <!-- start accordion -->
+              <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+                <div class="panel">
+                  <a class="panel-heading" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne">
+                    <h4 class="panel-title">Court Details</h4>
+                  </a>
+                  <div id="collapseOne1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            
+                            <th style="width: 5%;">Sl-No</th>
+                            <th style="width: 15%;">State</th>
+                            <th style="width: 25%;">Court Name</th>
+                            <th style="width: 45%;">Address</th>
+			    <th style="width: 10%;">Contact No</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for iterator in receivedJson2.courtlist  %}
+                             <tr>
+                                 <td id='slno' style="width: 5%;" >{{iterator.slno}}</td>
+                                 <td id='state' style="width: 15%;" >{{curstatename}}</td>
+                                 <td id='court_name' style="width: 25%;" >{{iterator.court_name}}</td>
+                                 <td id='addr' style="width: 45%;" >{{iterator.addr}}</td>
+                                 <td id='phoneno' style="width: 10%;" >{{iterator.phoneno}}</td>
+                             </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <!-- end of accordion -->
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+     
+
+    <div class="clearfix"></div>
+  </div>
+  {% endwith %}
+  {% endwith %}
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super }}
+  <!-- PNotify -->
+  <script src="/static/vendors/pnotify/dist/pnotify.js"></script>
+  <script src="/static/vendors/pnotify/dist/pnotify.buttons.js"></script>
+  <script src="/static/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+{% endblock javascripts %}
