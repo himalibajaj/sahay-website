@@ -196,9 +196,9 @@ def reports(request):
     response_data2 = {}
     response_data2['nearest_court_count']=0
     response_data2['courtlist']=[]
-    for slno in datastore.smembers("statewiselist:"+statename):
+    for slno in datastore.get("statewiselist:"+statename, set()):
         courtdict = {} 
-        courtdict = datastore.hgetall("statename:slno:"+statename+":"+slno);
+        courtdict = datastore.get("statename:slno:"+statename+":"+slno, {});
         courtdict["slno"]=cnt+1 
         response_data2['courtlist'].append(courtdict)
         cnt = cnt + 1
