@@ -141,9 +141,9 @@ def courtdetails(request):
     response_data['court_count']=0
     cnt=0
     response_data['courtlist']=[]
-    for slno in datastore.smembers("statewiselist:"+statename):
+    for slno in datastore.get("statewiselist:"+statename):
         courtdict = {} 
-        courtdict = datastore.hgetall("statename:slno:"+statename+":"+slno);
+        courtdict = datastore.get("statename:slno:"+statename+":"+slno);
         courtdict["slno"]=cnt+1 
         response_data['courtlist'].append(courtdict)
         cnt = cnt + 1
@@ -327,14 +327,14 @@ def year_2025(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2025"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -353,7 +353,7 @@ def year_2025(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -829,14 +829,14 @@ def year_2024(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2024"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -855,7 +855,7 @@ def year_2024(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -1331,14 +1331,14 @@ def year_2023(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2023"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -1357,7 +1357,7 @@ def year_2023(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -1833,14 +1833,14 @@ def year_2022(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2022"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -1859,7 +1859,7 @@ def year_2022(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -2335,14 +2335,14 @@ def year_2021(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2021"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -2361,7 +2361,7 @@ def year_2021(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -2837,14 +2837,14 @@ def year_2020(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2020"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -2863,7 +2863,7 @@ def year_2020(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -3339,14 +3339,14 @@ def year_2022(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2022"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -3365,7 +3365,7 @@ def year_2022(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -3841,14 +3841,14 @@ def year_2019(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2019"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -3867,7 +3867,7 @@ def year_2019(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -4343,14 +4343,14 @@ def year_2018(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2018"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -4369,7 +4369,7 @@ def year_2018(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -4845,14 +4845,14 @@ def year_2017(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2017"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -4871,7 +4871,7 @@ def year_2017(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -5347,14 +5347,14 @@ def year_2016(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2016"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -5373,7 +5373,7 @@ def year_2016(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
@@ -5848,14 +5848,14 @@ def year_2015(request):
     top2_days_case_length=0
     top3_days_case_length=0
     top4_days_case_length=0
-    for case_number in datastore2.smembers('all_case_set'):
+    for case_number in datastore2.get('all_case_set', set()):
         print("\ncurrent case_number="+case_number)
         if case_number.endswith("2015"):
            total_case = total_case + 1
            case_type = case_number.split("/")[1]
            ct_index=0
            total_number_hearing=0
-           total_number_hearing=datastore2.scard('all_case_wise_hearing_set:'+case_number)
+           total_number_hearing=datastore2.get('all_case_wise_hearing_set:'+case_number)
            total_number_hearing_count[total_number_hearing]=total_number_hearing_count[total_number_hearing]+1
            filing_date=datastore2.hget( "case_details_hm:"+case_number, "filing_date_element")
            case_stage=datastore2.hget( "case_details_hm:"+case_number, "case_stage_element")
@@ -5874,7 +5874,7 @@ def year_2015(request):
                  continue
               filing_date_object = datetime.strptime(filing_date, date_format)
               
-              for hearing_date in datastore2.smembers('all_case_wise_hearing_set:'+case_number):
+              for hearing_date in datastore2.get('all_case_wise_hearing_set:'+case_number):
                   total_hearing = total_hearing + 1
                   hearing_date_object = datetime.strptime(hearing_date, date_format)
                   date_gap= hearing_date_object - filing_date_object
