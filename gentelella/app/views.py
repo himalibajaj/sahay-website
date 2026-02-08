@@ -92,9 +92,8 @@ with open('court_address2.csv', mode ='r', encoding='utf-8')as file:
 
 @csrf_exempt 
 def get_con():
-   POOL2 = redis.ConnectionPool(host='192.168.186.102', decode_responses=True, port=6379, db=0)
-   datastore2 = redis.StrictRedis(connection_pool=POOL)
-   return datastore2
+   # Return the same in-memory datastore
+   return datastore
 
            
 @csrf_exempt              
