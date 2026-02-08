@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import csv
 import re
-import redis
 import os
 import os
 import google.generativeai as genai
@@ -32,13 +31,8 @@ chat = model.start_chat(history=[])
 
 
 
-POOL = redis.ConnectionPool(host='127.0.0.1', decode_responses=True, port=6379, db=0)
-
-# For production: use Redis URL from environment variable
-if os.environ.get('REDIS_URL'):
-    datastore = redis.Redis.from_url(os.environ.get('REDIS_URL'), decode_responses=True)
-else:
-    datastore = redis.StrictRedis(connection_pool=POOL)
+# Use in-memory dictionary instead of Redis
+datastore = {}
 
 replace = lambda x: x.replace(u'\xa0', u' ')
 trimstr = lambda x: x.strip()
@@ -73,12 +67,25 @@ with open('court_address2.csv', mode ='r', encoding='utf-8')as file:
            court_dict["addr"]=addr
            court_dict["phoneno"]=phoneno
            court_dict["pincode"]=pincode
-           datastore.hmset("statename:slno:"+statename+":"+slno, court_dict)  
-           datastore.sadd("statewiselist:"+statename, slno) 
-           datastore.sadd("statelist", statename)
-           datastore.sadd("pincodelist", pincode)
-           datastore.hmset("pincode:"+pincode, court_dict)
-           datastore.set("pincode:state:"+pincode, statename)
+           
+           # Store in memory dictionary instead of Redis
+           datastore["statename:slno:"+statename+":"+slno] = court_dict
+           
+           if "statewiselist:"+statename not in datastore:
+               datastore["statewiselist:"+statename] = set()
+           datastore["statewiselist:"+statename].add(slno)
+           
+           if "statelist" not in datastore:
+               datastore["statelist"] = set()
+           datastore["statelist"].add(statename)
+           
+           if "pincodelist" not in datastore:
+               datastore["pincodelist"] = set()
+           datastore["pincodelist"].add(pincode)
+           
+           datastore["pincode:"+pincode] = court_dict
+           datastore["pincode:state:"+pincode] = statename
+           
            if pincode.isdigit() :
               pincodealllist.append(pincode)
 
@@ -125,7 +132,7 @@ def courtdetails(request):
     statename=request.POST.get('statename')
     print("statename=",statename)
     context = {}
-    statelist = datastore.smembers('statelist')
+    statelist = datastore.get('statelist', set())
     statelist2=list(statelist)
     if statename == None:
        statename=statelist2[0]
@@ -163,7 +170,7 @@ def reports(request):
     myemail=request.POST.get('email')
     
     print("pinnumber=",pinnumber)
-    statelist = datastore.smembers('statelist')
+    statelist = datastore.get('statelist', set())
     context = {}
     maxmatch=-1
     nearestpin=pinnumber
@@ -176,7 +183,7 @@ def reports(request):
             nearestpin=pinitr
             break
     courtdict = {}       
-    courtdict = datastore.hgetall("pincode:"+nearestpin);    
+    courtdict = datastore.get("pincode:"+nearestpin, {});    
     cnt=0
     response_data = {}
     response_data['nearest_court_count']=0
@@ -184,7 +191,7 @@ def reports(request):
     response_data['nearestcourtlist'].append(courtdict)
     cnt = cnt + 1
     response_data['nearest_court_count']=cnt
-    statename =datastore.get("pincode:state:"+nearestpin)
+    statename = datastore.get("pincode:state:"+nearestpin, "")
     cnt=0
     response_data2 = {}
     response_data2['nearest_court_count']=0
