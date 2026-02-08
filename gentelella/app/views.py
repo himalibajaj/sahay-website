@@ -11,7 +11,7 @@ import google.generativeai as genai
 from datetime import datetime, timedelta
 
 
-GOOGLE_API_KEY='AIzaSyBBxGZJriCR4aPgvlkddEdYygAY4BOauqI'
+GOOGLE_API_KEY='AIzaSyBBwjx3aMKEAcM99abLABUAd7SGncMGsgw'
 genai.configure(api_key=GOOGLE_API_KEY)
 
 for m in genai.list_models():
